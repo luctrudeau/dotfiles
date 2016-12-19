@@ -117,7 +117,11 @@ set guioptions-=L
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Turn backup off, since most stuff is in SVN, git et.c anyway...
+
+" Automatically save before commands like :next and :make
+set autowrite
+
+" Turn backup off
 set nobackup
 set nowb
 set noswapfile
