@@ -1,4 +1,3 @@
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Searching
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -7,7 +6,6 @@ set hlsearch
 
 " Search while I type
 set incsearch
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Highlights
@@ -30,6 +28,8 @@ let c_space_error = 1
 highlight ColorColumn ctermbg=magenta
 call matchadd('ColorColumn', '\%81v', 100)
 
+" Display tabs and trailing spaces visually
+set list listchars=tab:\ \ ,trail:·
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Utilities
@@ -42,35 +42,22 @@ set shell=/bin/bash
 " This makes vim awesome should be there by default!
 set clipboard=unnamedplus
 
+" Auto indent pasted text
+nnoremap p p=`]<C-o>
+nnoremap P P=`]<C-o>
+
 " Delete without cutting (no seriously)
 nnoremap d "_d
 vnoremap d "_d
-
-" Move a line of text using ALT+[jk]
-if has('gui_running')
-	nnoremap <A-j> :m .+1<CR>==
-	nnoremap <A-k> :m .-2<CR>==
-	inoremap <A-j> <Esc>:m .+1<CR>==gi
-	inoremap <A-k> <Esc>:m .-2<CR>==gi
-	vnoremap <A-j> :m '>+1<CR>gv=gv
-	vnoremap <A-k> :m '<-2<CR>gv=gvvmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
-else
-" Turns out terminal emulators don't send the alt key
-" Go figure... This works with gnome-terminal
-" http://stackoverflow.com/questions/6778961/alt-key-shortcuts-not-working-on-gnome-terminal-with-vim
-	nnoremap j :m .+1<CR>==
-	nnoremap k :m .-2<CR>==
-	inoremap j <Esc>:m .+1<CR>==gi
-	inoremap k <Esc>:m .-2<CR>==gi
-	vnoremap j :m '>+1<CR>gv=gv
-	vnoremap k :m '<-2<CR>gv=gv
-endif
 
 " Don't redraw while executing macros (good performance config)
 set lazyredraw
 
 " Show matching brackets when text indicator is over them
 set showmatch
+
+"Show incomplete cmds down the bottom
+set showcmd
 
 " No annoying sound on errors
 set noerrorbells
@@ -87,6 +74,9 @@ set ffs=unix,dos,mac
 " Always show the status line
 set laststatus=2
 
+"Start scrolling when we're 8 lines away from margins
+set scrolloff=8
+
 " Plugins are in ~/.vim/bundle
 execute pathogen#infect()
 filetype plugin indent on
@@ -101,9 +91,9 @@ if has("gui_running")
     set guioptions-=e
     set t_Co=256
     set guitablabel=%M\ %t
-    set guifont=Source\ Code\ Pro\ 12
+    " set guifont=Source\ Code\ Pro\ 10
     " set guifont=System\ San\ Francisco\ Display\ 10
-    " set guifont=DroidSansMono\ 12
+    set guifont=DroidSansMono\ 8
     autocmd GUIEnter * set vb t_vb=
 endif
 
@@ -113,7 +103,6 @@ set guioptions-=R
 set guioptions-=l
 set guioptions-=L
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -121,11 +110,18 @@ set guioptions-=L
 " Automatically save before commands like :next and :make
 set autowrite
 
-" Turn backup off
-set nobackup
-set nowb
-set noswapfile
+"Reload files changed outside vim
+set autoread
 
+" Turn backup off
+set directory^=$HOME/.vim/tmp//
+
+" Keep undo history across sessions, by storing in file.
+if has('persistent_undo') && !isdirectory(expand('~').'/.vim/backups')
+  silent !mkdir ~/.vim/backups > /dev/null 2>&1
+  set undodir=~/.vim/backups
+  set undofile
+endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Windows, Splits and Tabs
@@ -172,7 +168,6 @@ endif
 set showtabline=2
 
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => ctags and build tools
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -183,10 +178,10 @@ cnoreabbrev tt TagbarToggle
 " Fuzzy match for ctags
 nnoremap <leader>. :CtrlPTag<cr>
 
+" Open quickfix window after grep
 autocmd QuickFixCmdPost *grep* cwindow
 
-autocmd FileType c let b:dispatch = 'build/build.sh'
-nmap <silent> <C-b> :Dispatch build/build.sh<CR>
+set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -199,3 +194,6 @@ noremap <Down> <NOP>
 noremap <Left> <NOP>
 noremap <Right> <NOP>
 
+" I'm always hitting these keys by accident
+nnoremap <PageUp> <NOP>
+nnoremap <PageDown> <NOP>
