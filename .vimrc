@@ -93,7 +93,7 @@ if has("gui_running")
     set guitablabel=%M\ %t
     " set guifont=Source\ Code\ Pro\ 10
     " set guifont=System\ San\ Francisco\ Display\ 10
-    set guifont=DroidSansMono\ 8
+    set guifont=DroidSansMono\ 10
     autocmd GUIEnter * set vb t_vb=
 endif
 
