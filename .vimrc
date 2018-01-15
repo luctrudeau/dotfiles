@@ -4,8 +4,10 @@
 " Highlight search results
 set hlsearch
 
-" Search while I type
-set incsearch
+" Show next matched string at the center of the screen
+nnoremap n nzz
+nnoremap N Nzz
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Highlights
@@ -14,12 +16,29 @@ set incsearch
 " Enable syntax highlighting
 syntax enable
 
+" Syntastic Recommended Settings
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+set background=dark
+
+colorscheme solarized
+
 " Show different levels of parentheses in different colors
 " https://github.com/luochen1990/rainbow
-let g:rainbow_active =1
+let g:rainbow_active = 1
 
 " Show line numbers
 set number
+
+" Highlight current line
+set cursorline
 
 " Display trailing white spaces
 let c_space_error = 1
@@ -30,6 +49,8 @@ call matchadd('ColorColumn', '\%81v', 100)
 
 " Display tabs and trailing spaces visually
 set list listchars=tab:\ \ ,trail:·
+
+let g:airline_powerline_fonts = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Utilities
@@ -77,11 +98,6 @@ set laststatus=2
 "Start scrolling when we're 8 lines away from margins
 set scrolloff=8
 
-" Plugins are in ~/.vim/bundle
-execute pathogen#infect()
-filetype plugin indent on
-
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => GUI
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -91,9 +107,7 @@ if has("gui_running")
     set guioptions-=e
     set t_Co=256
     set guitablabel=%M\ %t
-    " set guifont=Source\ Code\ Pro\ 10
-    " set guifont=System\ San\ Francisco\ Display\ 10
-    set guifont=DroidSansMono\ 10
+    set guifont=Source\ Code\ Pro\ 11
     autocmd GUIEnter * set vb t_vb=
 endif
 
@@ -113,15 +127,6 @@ set autowrite
 "Reload files changed outside vim
 set autoread
 
-" Turn backup off
-set directory^=$HOME/.vim/tmp//
-
-" Keep undo history across sessions, by storing in file.
-if has('persistent_undo') && !isdirectory(expand('~').'/.vim/backups')
-  silent !mkdir ~/.vim/backups > /dev/null 2>&1
-  set undodir=~/.vim/backups
-  set undofile
-endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Windows, Splits and Tabs
@@ -137,36 +142,8 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
-" Awesome way to manage tabs
-nmap <silent> tt :tabnew<CR>
-if has('gui_running')
-  nnoremap <A-1> 1gt
-  nnoremap <A-2> 2gt
-  nnoremap <A-3> 3gt
-  nnoremap <A-4> 4gt
-  nnoremap <A-5> 5gt
-  nnoremap <A-6> 6gt
-  nnoremap <A-7> 7gt
-  nnoremap <A-8> 8gt
-  nnoremap <A-9> 9gt
-else
-" Turns out terminal emulators don't send the alt key
-" Go figure... This works with gnome-terminal
-" http://stackoverflow.com/questions/6778961/alt-key-shortcuts-not-working-on-gnome-terminal-with-vim
-  nnoremap 1 1gt
-  nnoremap 2 2gt
-  nnoremap 3 3gt
-  nnoremap 4 4gt
-  nnoremap 5 5gt
-  nnoremap 6 6gt
-  nnoremap 7 7gt
-  nnoremap 8 8gt
-  nnoremap 9 9gt
-endif
-
 " Show tab number
 set showtabline=2
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => ctags and build tools
@@ -183,6 +160,9 @@ autocmd QuickFixCmdPost *grep* cwindow
 
 set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
 
+autocmd FileType c ClangFormatAutoEnable
+
+nmap <silent> rr :silent !tmux send-keys -t BUILDER "aombuild --tiger" Enter <CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Hardcore mode
@@ -197,3 +177,9 @@ noremap <Right> <NOP>
 " I'm always hitting these keys by accident
 nnoremap <PageUp> <NOP>
 nnoremap <PageDown> <NOP>
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
