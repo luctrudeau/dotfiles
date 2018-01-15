@@ -13,3 +13,6 @@
 [submodule "vim/pack/ltrudeau/start/tagbar"]
 	path = vim/pack/ltrudeau/start/tagbar
 	url = https://github.com/majutsushi/tagbar
+[submodule "vim/pack/ltrudeau/start/rainbow"]
+	path = vim/pack/ltrudeau/start/rainbow
+	url = https://github.com/luochen1990/rainbow
