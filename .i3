@@ -8,7 +8,7 @@ new_float normal
 hide_edge_borders none
 
 # font
-font pango: DroidSansMono Nerd Font Regular 12
+font pango: DroidSansMono Nerd Font Regular 14
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -19,15 +19,8 @@ bindsym $mod+Return exec i3-sensible-terminal
 # kill focused window
 bindsym $mod+q kill
 
-# start dmenu (a program launcher)
-#bindsym $mod+d exec dmenu_run
-# There also is the (new) i3-dmenu-desktop which only displays applications
-# shipping a .desktop file. It is a wrapper around dmenu, so you need that
-# installed.
-#bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+# Launcher
 bindsym $mod+space exec rofi -show run -font "Source Code Pro 64" -fullscreen -lines 3 -eh 1 -padding 200 -opacity "95" -bw 0
-
-exec --no-startup-id volumeicon
 
 # change focus
 bindsym $mod+h focus left
@@ -40,16 +33,6 @@ bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
-
-# lock
-bindsym $mod+Shift+x exec gnome-screensaver-command -l
-
-
-# alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
 bindsym $mod+b split h
@@ -68,23 +51,15 @@ bindsym $mod+e layout toggle split
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
 
-# change focus between tiling / floating windows
-#bindsym $mod+space focus mode_toggle
-
-# focus the parent container
-bindsym $mod+a focus parent
-
-# focus the child container
-#bindsym $mod+d focus child
-
 set $ws1 1:  Work
 set $ws2 2:  Web
 set $ws3 3:  Work
 set $ws4 4:  Terminals
 set $ws5 5: Ranger
 set $ws6 6: Misc.
-set $ws7 7:  Mail  Calendar
-set $ws8 8: IRC
+set $ws7 7:  Mail  Calendar IRC
+set $ws8 8: Misc.
+set $ws8 9: Misc.
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -110,10 +85,9 @@ bindsym $mod+Shift+9 move container to workspace $ws9
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
+
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -128,12 +102,6 @@ mode "resize" {
         bindsym k resize shrink height 10 px or 10 ppt
         bindsym l resize grow width 10 px or 10 ppt
 
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
-
         # back to normal: Enter or Escape
         bindsym Return mode "default"
         bindsym Escape mode "default"
@@ -142,21 +110,17 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # Set shut down, restart and locking features
-#bindsym $mod+0 mode "$mode_system"
-#set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
-#mode "$mode_system" {
-#    bindsym l exec --no-startup-id i3exit lock, mode "default"
-#    bindsym s exec --no-startup-id i3exit suspend, mode "default"
-#    bindsym u exec --no-startup-id i3exit switch_user, mode "default"
-#    bindsym e exec --no-startup-id i3exit logout, mode "default"
-#    bindsym h exec --no-startup-id i3exit hibernate, mode "default"
-#    bindsym r exec --no-startup-id i3exit reboot, mode "default"
-#    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
-#
-#    # exit system mode: "Enter" or "Escape"
-#    bindsym Return mode "default"
-#    bindsym Escape mode "default"
-#}
+bindsym $mod+0 mode "$mode_system"
+set $mode_system (l)ock, (r)eboot, (Shift+s)hutdown
+mode "$mode_system" {
+     bindsym l exec --no-startup-id gnome-screensaver-command -l, mode "default"
+     bindsym r exec --no-startup-id systemctl reboot, mode "default"
+     bindsym Shift+s exec --no-startup-id systemctl poweroff, mode "default"
+
+    # exit system mode: "Enter" or "Escape"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
 
 exec --no-startup-id nm-applet
 exec --no-startup-id /usr/libexec/gnome-settings-daemon
@@ -168,7 +132,16 @@ bar {
         status_command i3status
         tray_output primary
 	position top
-        font pango:DroidSansMonoForPowerline Nerd Font Regular 12
+        font pango:DroidSansMonoForPowerline Nerd Font Regular 14
+  colors {
+    background #343d46
+    statusline #eff1f5
+    separator #323232
+    focused_workspace #a3be8c #65737e #eff1f5
+    active_workspace #4f5b66 #5f676a #eff1f5
+    inactive_workspace #4f5b66 #4f5b66 #a7adba
+    urgent_workspace #bf616a #65737e #eff1f5
+  }
 }
 
 # Pulse Audio controls
@@ -182,6 +155,8 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightne
 
 # Background
 exec --no-startup-id feh --bg-fill /usr/share/backgrounds/Famille2016.jpg
-#exec --no-startup-id compton -f
-exec --no-startup-id udiskie
+exec --no-startup-id udiskie --tray
 
+# Setup for 1 and 3 monitors
+bindsym $mod+m         exec bash ~/.screenlayout/1head.sh
+bindsym $mod+shift+m   exec bash ~/.screenlayout/3head.sh
