@@ -10,3 +10,6 @@
 [submodule "vim/pack/ltrudeau/start/vim-colors-solarized"]
 	path = vim/pack/ltrudeau/start/vim-colors-solarized
 	url = https://github.com/altercation/vim-colors-solarized
+[submodule "vim/pack/ltrudeau/start/tagbar"]
+	path = vim/pack/ltrudeau/start/tagbar
+	url = https://github.com/majutsushi/tagbar
