@@ -31,3 +31,6 @@
 [submodule "vim/pack/ltrudeau/start/vimtex"]
 	path = vim/pack/ltrudeau/start/vimtex
 	url = https://github.com/lervag/vimtex
+[submodule "vim/pack/ltrudeau/start/vim-unimpaired"]
+	path = vim/pack/ltrudeau/start/vim-unimpaired
+	url = https://github.com/tpope/vim-unimpaired
