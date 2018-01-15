@@ -1,3 +1,6 @@
 [submodule "vim/pack/ltrudeau/start/vim-airline"]
 	path = vim/pack/ltrudeau/start/vim-airline
 	url = https://github.com/vim-airline/vim-airline.git
+[submodule "vim/pack/ltrudeau/start/vim-fugitive"]
+	path = vim/pack/ltrudeau/start/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive
