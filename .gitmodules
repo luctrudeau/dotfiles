@@ -22,3 +22,6 @@
 [submodule "vim/pack/ltrudeau/start/vim-airline-themes"]
 	path = vim/pack/ltrudeau/start/vim-airline-themes
 	url = https://github.com/vim-airline/vim-airline-themes
+[submodule "vim/pack/ltrudeau/start/vim-gitgutter"]
+	path = vim/pack/ltrudeau/start/vim-gitgutter
+	url = https://github.com/airblade/vim-gitgutter
