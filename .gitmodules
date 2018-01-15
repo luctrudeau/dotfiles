@@ -25,3 +25,6 @@
 [submodule "vim/pack/ltrudeau/start/vim-gitgutter"]
 	path = vim/pack/ltrudeau/start/vim-gitgutter
 	url = https://github.com/airblade/vim-gitgutter
+[submodule "vim/pack/ltrudeau/start/vim-clang-format"]
+	path = vim/pack/ltrudeau/start/vim-clang-format
+	url = https://github.com/rhysd/vim-clang-format
