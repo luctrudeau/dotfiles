@@ -1,4 +1,9 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Plugins
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+filetype plugin on
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Searching
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Highlight search results
@@ -8,23 +13,12 @@ set hlsearch
 nnoremap n nzz
 nnoremap N Nzz
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Highlights
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Enable syntax highlighting
 syntax enable
-
-" Syntastic Recommended Settings
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
 
 set background=dark
 
@@ -51,6 +45,14 @@ call matchadd('ColorColumn', '\%81v', 100)
 set list listchars=tab:\ \ ,trail:·
 
 let g:airline_powerline_fonts = 1
+" Remove file encoding and file format from airline
+let g:airline_section_y = ''
+
+" Speed up git gutter
+" Taken from https://github.com/airblade/vim-gitgutter/issues/184
+let g:gitgutter_realtime = 0
+let g:gitgutter_eager = 1
+let g:gitgutter_max_signs = 500  " default value
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Utilities
@@ -107,7 +109,7 @@ if has("gui_running")
     set guioptions-=e
     set t_Co=256
     set guitablabel=%M\ %t
-    set guifont=Source\ Code\ Pro\ 11
+    set guifont=Source\ Code\ Pro\ 12
     autocmd GUIEnter * set vb t_vb=
 endif
 
@@ -161,8 +163,6 @@ autocmd QuickFixCmdPost *grep* cwindow
 set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
 
 autocmd FileType c ClangFormatAutoEnable
-
-nmap <silent> rr :silent !tmux send-keys -t BUILDER "aombuild --tiger" Enter <CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Hardcore mode
